@@ -1,0 +1,25 @@
+{
+  "name": "taiwan-tourguide",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack",
+    "build": "webpack --mode production",
+    "start": "webpack serve --open"
+  },
+  "author": "Howard",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.5.1",
+    "html-loader": "^3.0.1",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.3",
+    "raw-loader": "^4.0.2",
+    "sass": "^1.43.4",
+    "sass-loader": "^12.3.0",
+    "webpack": "^5.61.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.4.0"
+  }
+}
