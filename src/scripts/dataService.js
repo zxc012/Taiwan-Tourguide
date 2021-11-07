@@ -25,7 +25,7 @@ export function getAttractionsCount() {
     return axios({
         headers: getAuthorizationHeader(),
         method: 'GET',
-        baseURL: `${URL_BASE}/ScenicSpot?$select=ID&$filter=Picture%2FPictureUrl1%20ne%20null&$format=JSON`
+        baseURL: `${URL_BASE}/ScenicSpot?$select=ID&$filter=Picture%2FPictureUrl1%20ne%20null&$orderby=UpdateTime%20desc&$format=JSON`
     })
         .then((value) => value.data.length)
 }
@@ -36,6 +36,6 @@ export function getAttractionsData(page,) {
     return axios({
         headers: getAuthorizationHeader(),
         method: 'GET',
-        baseURL: `${URL_BASE}/ScenicSpot?$filter=Picture%2FPictureUrl1%20ne%20null&$top=12&$skip=${skipPage}&$format=JSON`
+        baseURL: `${URL_BASE}/ScenicSpot?$filter=Picture%2FPictureUrl1%20ne%20null&$orderby=UpdateTime%20desc&$top=16&$skip=${skipPage}&$format=JSON`
     }).then((value) => value.data)
 }

@@ -6,7 +6,6 @@ export async function main() {
 
 
     const length = await getAttractionsCount()
-
     const dataList = await getAttractionsData()
 
     dataList.forEach(data => {
