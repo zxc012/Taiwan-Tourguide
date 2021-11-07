@@ -1,14 +1,107 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>台灣旅遊景點導覽 － Taiwan Tourguide</title>
-  </head>
-  <body>
-    <div class="header">1223sad3355</div>
-    <div class="img">123</div>
-    <img src="~img/banner.png" alt="logo" />
-  </body>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Taiwan－旅遊導覽</title>
+</head>
+
+<body>
+  <header id="header" class="fixed-top">
+    <nav class="container d-flex justify-content-between align-items-center">
+      <img id="logo" src="~img/icon-logo1.svg" alt="網站Logo" />
+      <button class="btn btn-light shadow">
+        <img src="~img/icon-like-grey.svg" alt="愛心" />
+        <small>我的最愛</small>
+        </div>
+    </nav>
+  </header>
+
+  <div class="banner d-flex align-items-end">
+    <div class="container">
+      <div class="row d-none d-md-block">
+        <h1 class="col offset-1">景點</h1>
+      </div>
+
+      <div class="row row-cols-auto mb-2">
+        <div class="col offset-md-1">
+          <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
+          <label for="option1" class="btn btn-light rounded-pill px-4 py-2 me-2">
+            <span>景點</span>
+            <img src="~img/icon-attractions.svg" alt="景點icon" />
+          </label>
+          <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
+          <label for="option2" class="btn btn-light rounded-pill px-4 py-2 me-2">
+            <span>餐飲</span>
+            <img src="~img/icon-restaurant.svg" alt="餐飲icon" />
+          </label>
+          <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
+          <label for="option3" class="btn btn-light rounded-pill px-4 py-2 me-2">
+            <span>旅宿</span>
+            <img src="~img/icon-hotel.svg" alt="旅宿icon" />
+          </label>
+          <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
+          <label for="option4" class="btn btn-light rounded-pill px-4 py-2">
+            <span>活動</span>
+            <img src="~img/icon-activity.svg" alt="活動icon" />
+          </label>
+        </div>
+      </div>
+
+      <form class="row gx-1 mb-3">
+        <div class="col-4 offset-md-1">
+          <input type="select" class="form-select py-2" placeholder="輸入想去的地區">
+        </div>
+        <div class="col-4">
+          <input type="text" class="form-control py-2" placeholder="輸入景點名稱">
+        </div>
+        <div class="col d-none d-md-block">
+          <button class="btn btn-primary px-4 py-2">
+            <img src="~img/icon-search.svg" alt="開始搜尋" />
+            <span>搜尋</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="content py-5">
+    <div class="container">
+      <div class="row mb-3">
+        <div class="col">
+          <h3 class="border-start border-primary border-3 ps-0">搜尋結果</h3>
+        </div>
+        <div class="col text-end">
+          <span class="me-2">排序</span>
+          <select name="sort" id="sort" class="form-select d-inline">
+            <option>最新</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row mb-3 row-cols-md-4 g-2 gy-3" id="cardList">
+        <!-- <div class="col">
+          <div class="card border-2 rounded-2 shadow">
+            <img src="~img/card-image.jpg" alt="123" class="card-image">
+            <div class="card-body">
+              <p class="card-title">外傘頂洲沙灘</p>
+              <div class="card-text d-flex align-items-center">
+                <img src="~img/icon-location.svg" alt="地點icon" class="">
+                <span class="text-primary text-decoration-underline">臺北市</span>
+              </div>
+            </div>
+            <div class="card-footer border-0 bg-body">
+              <p class="badge bg-secondary">遊憩類</p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="footer d-flex justify-content-center">
+    <small>THE F2E 3rd Week 01 Desin by : Frank Peng, Code by : Howard Lee</small>
+  </div>
+</body>
+
 </html>
