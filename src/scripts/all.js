@@ -6,10 +6,8 @@ export async function main() {
 
 
     const length = await getAttractionsCount()
-    console.log('length :>> ', length);
 
     const dataList = await getAttractionsData()
-    console.log('dataList :>> ', dataList);
 
     dataList.forEach(data => {
         cardList.innerHTML += createNewCard(data.Picture.PictureUrl1, data.Name, data.Picture.PictureDescription1, data.Address.substr(0, 3), [data.Class1, data.Class2, data.Class3])
@@ -30,4 +28,5 @@ export async function main() {
 }
 
 main();
+
 
