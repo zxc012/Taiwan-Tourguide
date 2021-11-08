@@ -1,8 +1,8 @@
 @import "/node_modules/bootstrap/scss/functions";
+@import "./styles/color.scss";
 @import "./styles/variables";
 
 @import "/node_modules/bootstrap/scss/bootstrap";
 @import "./styles/font.scss";
-@import "./styles/color.scss";
 @import "./styles/mixin.scss";
 @import "./styles/main.scss";

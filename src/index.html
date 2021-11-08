@@ -9,50 +9,63 @@
 </head>
 
 <body>
+  <!-- 固定式導覽列 -->
   <header id="header" class="fixed-top">
-    <nav class="container d-flex justify-content-between align-items-center">
-      <img id="logo" src="~img/icon-logo1.svg" alt="網站Logo" />
-      <button class="btn btn-light shadow">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a href="#"><img id="logo" src="~img/icon-logo1.svg" alt="網站Logo" /></a>
+      <button class="btn btn-light shadow btn-like">
         <img src="~img/icon-like-grey.svg" alt="愛心" />
         <small>我的最愛</small>
-        </div>
-    </nav>
+      </button>
+    </div>
   </header>
 
-  <div class="banner d-flex align-items-end">
+  <!-- banner & 搜尋列 -->
+  <div class="banner d-flex align-items-end" id="banner">
     <div class="container">
       <div class="row d-none d-md-block">
-        <h1 class="col offset-1">景點</h1>
+        <h1 class="col offset-1 text-shadow" id="title">景點</h1>
       </div>
 
       <div class="row row-cols-auto mb-2">
-        <div class="col offset-md-1">
-          <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" checked>
-          <label for="option1" class="btn btn-light rounded-pill px-4 py-2 me-2">
+        <div class="col offset-md-1" id="searchOptions">
+          <input type="radio" class="btn-check" name="options" id="attractions" autocomplete="off" checked
+            data-text="景點">
+          <label for="attractions" class="btn-search btn rounded-pill px-4 py-2 me-2">
             <span>景點</span>
-            <img src="~img/icon-attractions.svg" alt="景點icon" />
+            <img src="~img/icon-attractions.svg" alt="景點icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="option2" autocomplete="off">
-          <label for="option2" class="btn btn-light rounded-pill px-4 py-2 me-2">
+          <input type="radio" class="btn-check" name="options" id="restaurant" autocomplete="off" data-text="餐飲">
+          <label for="restaurant" class="btn-search btn rounded-pill px-4 py-2 me-2">
             <span>餐飲</span>
-            <img src="~img/icon-restaurant.svg" alt="餐飲icon" />
+            <img src="~img/icon-restaurant.svg" alt="餐飲icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="option3" autocomplete="off">
-          <label for="option3" class="btn btn-light rounded-pill px-4 py-2 me-2">
+          <input type="radio" class="btn-check" name="options" id="hotel" autocomplete="off" data-text="旅宿">
+          <label for="hotel" class="btn btn-search rounded-pill px-4 py-2 me-2">
             <span>旅宿</span>
-            <img src="~img/icon-hotel.svg" alt="旅宿icon" />
+            <img src="~img/icon-hotel.svg" alt="旅宿icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="option4" autocomplete="off">
-          <label for="option4" class="btn btn-light rounded-pill px-4 py-2">
+          <input type="radio" class="btn-check" name="options" id="activity" autocomplete="off" data-text="活動">
+          <label for="activity" class=" btn btn-search rounded-pill px-4 py-2">
             <span>活動</span>
-            <img src="~img/icon-activity.svg" alt="活動icon" />
+            <img src="~img/icon-activity.svg" alt="活動icon" class="align-text-bottom" />
           </label>
         </div>
       </div>
 
       <form class="row gx-1 mb-3">
         <div class="col-4 offset-md-1">
-          <input type="select" class="form-select py-2" placeholder="輸入想去的地區">
+          <!-- <div class="dropdown"> -->
+          <!-- <a href="#" class="text-decoration-none" id="dropdownMenuLink" data-bs-toggle="dropdown"
+              aria-expanded="false"> -->
+          <input type="select" class="form-select py-2 bg-icon-location" placeholder="輸入想去的地區">
+          <!-- </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <li><button class="dropdown-item" type="button">Action</button></li>
+              <li><button class="dropdown-item" type="button">Another action</button></li>
+              <li><button class="dropdown-item" type="button">Something else here</button></li>
+            </ul> -->
+          <!-- </div> -->
         </div>
         <div class="col-4">
           <input type="text" class="form-control py-2" placeholder="輸入景點名稱">
@@ -66,8 +79,11 @@
       </form>
     </div>
   </div>
-  <div class="content py-5">
+
+  <!-- 搜尋結果 -->
+  <div class="content pt-5">
     <div class="container">
+      <!-- 排序方式 -->
       <div class="row mb-3">
         <div class="col">
           <h3 class="border-start border-primary border-3 ps-0">搜尋結果</h3>
@@ -80,7 +96,8 @@
         </div>
       </div>
 
-      <div class="row mb-3 row-cols-md-4 g-2 gy-3" id="cardList">
+      <!-- 內容 -->
+      <div class="row mb-5 row-cols-md-4 g-2 gy-3" id="cardList">
         <!-- <div class="col">
           <div class="card border-2 rounded-2 shadow">
             <img src="~img/card-image.jpg" alt="123" class="card-image">
@@ -97,8 +114,23 @@
           </div>
         </div> -->
       </div>
+
+      <!-- 分頁 -->
+      <nav class="navigation pb-3">
+        <ul class="pagination justify-content-center">
+          <li class="page-item"><a class="page-link" href="#">＜</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">4</a></li>
+          <li class="page-item"><a class="page-link" href="#">5</a></li>
+          <li class="page-item"><a class="page-link" href="#">＞</a></li>
+        </ul>
+      </nav>
     </div>
   </div>
+
+  <!-- 頁尾 -->
   <div class="footer d-flex justify-content-center">
     <small>THE F2E 3rd Week 01 Desin by : Frank Peng, Code by : Howard Lee</small>
   </div>

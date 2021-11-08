@@ -5,9 +5,18 @@ body {
   font-family: "Roboto";
 }
 
-.h-190 {
+
+.h-190px {
   height: 190px;
   object-fit: cover;
+}
+
+.bg-icon-location {
+  background-image: url("~img/icon-location.svg");
+  background-repeat: no-repeat;
+  background-size:auto;
+  background-position: 12px center;
+  padding-left: 40px;
 }
 
 .icon-location {
@@ -15,48 +24,50 @@ body {
   filter: drop-shadow(10000px 0 0 $color_blue)
 }
 
-nav {
+// 固定式導覽列
+header .container {
   height: 80px;
 
-  .btn-light {
+  .btn-like {
     color: $color_black;
   }
-  .btn-light:hover {
-    color: $darker-red;
-    border: 1px solid $darker-red;
+  .btn-like:hover {
+    color: $color_red;
+    border: 1px solid $color_red;
     img {
       transform: translateX(-10000px);
-      filter: drop-shadow(10000px 0 0 $darker-red)
+      filter: drop-shadow(10000px 0 0 $color_red)
     }
   }
 }
 
-.logo-drop{
-  transform: translateX(-10000px);
-  filter: drop-shadow(10000px 0 0 $color_blue)
-}
 
+
+// banner & 搜尋列 
 .banner {
+  transition: 0.2s;
   height: 50vh;
   background-image: url("~img/banner-attractions.png");
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
 
+  // 標題
   h1 {
     color: $color_white;
     font-size: 80px;
     text-shadow: 0px 3px 6px #00000029;
   }
 
-  .btn.btn-light {
+  .btn-search {
+    background-color: $color_white;
     color: $color_grey_2;
   }
 
-  .btn.btn-light:hover {
-    background-color: $darker_red;
+  .btn-search:hover {
+    background-color: $color_red;
     color: $color_white;
-    border: 1px solid $darker_red;
+    border: 1px solid $color_red;
 
     img {
       transform: translateX(-10000px);
@@ -64,13 +75,24 @@ nav {
     }
   }
 
-  .btn-check:checked.btn.btn-light {
-    background-color: $darker_red;
+  .btn-check:checked + .btn-search {
+    background-color: $color_red;
     color: $color_white;
-    border: 1px solid $darker_red;
+    border: 1px solid $color_red;
+
+    img {
+      transform: translateX(-10000px);
+      filter: drop-shadow(10000px 0 0 $color_white);
+    }
+  }
+
+  .btn-check:focus + .btn, .btn-search:focus {
+    box-shadow: 0 0 0 0;
   }
 }
 
+
+// 內容
 .content {
   background-color: $color_grey_1;
 
@@ -98,9 +120,17 @@ nav {
   }
 }
 
+// 頁尾
 .footer {
   small {
     color: $color_grey_2;
     line-height: 60px;
   }
+}
+
+
+// JavaScript動態設定
+.logo-drop{
+  transform: translateX(-10000px);
+  filter: drop-shadow(10000px 0 0 $color_blue)
 }
