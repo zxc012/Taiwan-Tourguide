@@ -10,10 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      COMMIT_SECRET: ${{secrets.commit_secret}}
-      USER_NAME   : zxc012
-      USER_EMAIL  : rt1593571@gmail.com
-      PUBLISH_DIR : ./dist
+      APPID: ${{ secrets.APPID }}
+      APPKEY: ${{ secrets.APPKEY }}
       
     strategy:
       matrix:
