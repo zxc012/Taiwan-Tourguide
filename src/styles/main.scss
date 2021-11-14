@@ -5,6 +5,11 @@ body {
   font-family: "Roboto";
 }
 
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
 
 .h-190px {
   height: 190px;
@@ -14,14 +19,14 @@ body {
 .bg-icon-location {
   background-image: url("~img/icon-location.svg");
   background-repeat: no-repeat;
-  background-size:auto;
+  background-size: auto;
   background-position: 12px center;
   padding-left: 40px;
 }
 
 .icon-location {
   transform: translateX(-10000px);
-  filter: drop-shadow(10000px 0 0 $color_blue)
+  filter: drop-shadow(10000px 0 0 $color_blue);
 }
 
 // 固定式導覽列
@@ -36,14 +41,12 @@ header .container {
     border: 1px solid $color_red;
     img {
       transform: translateX(-10000px);
-      filter: drop-shadow(10000px 0 0 $color_red)
+      filter: drop-shadow(10000px 0 0 $color_red);
     }
   }
 }
 
-
-
-// banner & 搜尋列 
+// banner & 搜尋列
 .banner {
   transition: 0.2s;
   height: 50vh;
@@ -68,6 +71,7 @@ header .container {
     background-color: $color_red;
     color: $color_white;
     border: 1px solid $color_red;
+    box-shadow: 0px 3px 6px #00000055;
 
     img {
       transform: translateX(-10000px);
@@ -86,17 +90,17 @@ header .container {
     }
   }
 
-  .btn-check:focus + .btn, .btn-search:focus {
+  .btn-check:focus + .btn,
+  .btn-search:focus {
     box-shadow: 0 0 0 0;
   }
 }
-
 
 // 內容
 .content {
   background-color: $color_grey_1;
 
-  h3 {
+  h5 {
     color: $color_black;
   }
 
@@ -104,18 +108,63 @@ header .container {
     width: 80px;
   }
 
-
-
-  .card-image{
-    transition: 0.5s;
-    transform-origin: 50% 100%
+  .card-body {
+    color: initial;
   }
 
+  .card-image {
+    transition: 0.5s;
+    transform-origin: 50% 100%;
+  }
 
   .card:hover {
     border: 1px solid $color_red;
     .card-image {
-      transform: scale(1.1,1.1);
+      transform: scale(1.1, 1.1);
+    }
+  }
+}
+
+// 換頁
+.pagination-item {
+  &:first-child a {
+    color: $color_grey_2;
+    border: 1px solid $color_grey_3;
+  }
+
+  &:last-child a {
+    color: $color_white;
+    background-color: $color_red;
+  }
+
+  a {
+    background-color: $color_white;
+    color: $color_black;
+    border-radius: 8px;
+    border: 1px solid #00000000;
+    display: inline-block;
+    color: inherit;
+    line-height: 44px;
+    width: 44px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: bold;
+
+    &[data-disabled="false"]:hover {
+      background-color: $color_darkblue;
+      color: $color_blue;
+      border: 1px solid $color_blue;
+    }
+
+    // &[data-disabled="true"]:hover {
+    //   pointer-events: none;
+    //   cursor: none;
+    // }
+
+    &[data-active="true"] {
+      background-color: $color_darkblue;
+      color: $color_blue;
+      border: 1px solid $color_blue;
     }
   }
 }
@@ -128,9 +177,8 @@ header .container {
   }
 }
 
-
 // JavaScript動態設定
-.logo-drop{
+.logo-drop {
   transform: translateX(-10000px);
-  filter: drop-shadow(10000px 0 0 $color_blue)
+  filter: drop-shadow(10000px 0 0 $color_blue);
 }

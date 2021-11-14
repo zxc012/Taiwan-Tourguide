@@ -1,8 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const devMode = process.env.NODE_ENV !== 'production'
 const Dotenv = require('dotenv-webpack');
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+const devMode = process.env.NODE_ENV !== 'production'
 
 module.exports = {
     entry: './src/main.js',
@@ -62,6 +63,15 @@ module.exports = {
         devMode ? new MiniCssExtractPlugin({
             filename: 'styles/[name].[contenthash].css'
         }) : {},
-        new Dotenv()
+        // new ImageMinimizerPlugin({
+        //     minimizerOptions: {
+        //         plugins: [
+        //             ['gifsicle', { interlaced: true }],
+        //             ['jpegtran', { progressive: true }],
+        //             ['optipng', { optimizationLevel: 5 }]
+        //         ],
+        //     }
+        // }),
+        new Dotenv(),
     ]
 }

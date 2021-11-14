@@ -24,69 +24,119 @@
   <div class="banner d-flex align-items-end" id="banner">
     <div class="container">
       <div class="row d-none d-md-block">
-        <h1 class="col offset-1 text-shadow" id="title">景點</h1>
+        <h1 class="col-11 offset-1 text-shadow" id="title">景點</h1>
       </div>
 
       <div class="row row-cols-auto mb-2">
         <div class="col offset-md-1" id="searchOptions">
           <input type="radio" class="btn-check" name="options" id="attractions" autocomplete="off" checked
-            data-text="景點">
+            data-text="景點" />
           <label for="attractions" class="btn-search btn rounded-pill px-4 py-2 me-2">
             <span>景點</span>
             <img src="~img/icon-attractions.svg" alt="景點icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="restaurant" autocomplete="off" data-text="餐飲">
+          <input type="radio" class="btn-check" name="options" id="restaurant" autocomplete="off" data-text="餐飲" />
           <label for="restaurant" class="btn-search btn rounded-pill px-4 py-2 me-2">
             <span>餐飲</span>
             <img src="~img/icon-restaurant.svg" alt="餐飲icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="hotel" autocomplete="off" data-text="旅宿">
+          <input type="radio" class="btn-check" name="options" id="hotel" autocomplete="off" data-text="旅宿" />
           <label for="hotel" class="btn btn-search rounded-pill px-4 py-2 me-2">
             <span>旅宿</span>
             <img src="~img/icon-hotel.svg" alt="旅宿icon" class="align-text-bottom" />
           </label>
-          <input type="radio" class="btn-check" name="options" id="activity" autocomplete="off" data-text="活動">
-          <label for="activity" class=" btn btn-search rounded-pill px-4 py-2">
+          <input type="radio" class="btn-check" name="options" id="activity" autocomplete="off" data-text="活動" />
+          <label for="activity" class="btn btn-search rounded-pill px-4 py-2">
             <span>活動</span>
             <img src="~img/icon-activity.svg" alt="活動icon" class="align-text-bottom" />
           </label>
         </div>
       </div>
 
-      <form class="row gx-1 mb-3">
+      <div class="row gx-1 mb-3">
         <div class="col-4 offset-md-1">
-          <!-- <div class="dropdown"> -->
-          <!-- <a href="#" class="text-decoration-none" id="dropdownMenuLink" data-bs-toggle="dropdown"
-              aria-expanded="false"> -->
-          <input type="select" class="form-select py-2 bg-icon-location" placeholder="輸入想去的地區">
-          <!-- </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <li><button class="dropdown-item" type="button">Action</button></li>
-              <li><button class="dropdown-item" type="button">Another action</button></li>
-              <li><button class="dropdown-item" type="button">Something else here</button></li>
-            </ul> -->
-          <!-- </div> -->
+          <select class="form-select py-2 bg-icon-location" name="searchCity" id="searchCity">
+            <option value="" selected>輸入想去的地區</option>
+            <option value="Taipei">臺北市</option>
+            <option value="NewTaipei">新北市</option>
+            <option value="Taoyuan">桃園市</option>
+            <option value="Taichung">臺中市</option>
+            <option value="Tainan">臺南市</option>
+            <option value="Kaohsiung">高雄市</option>
+            <option value="Keelung">基隆市</option>
+            <option value="Hsinchu">新竹市</option>
+            <option value="HsinchuCounty">新竹縣</option>
+            <option value="MiaoliCounty">苗栗縣</option>
+            <option value="ChanghuaCounty">彰化縣</option>
+            <option value="NantouCounty">南投縣</option>
+            <option value="YunlinCounty">雲林縣</option>
+            <option value="ChiayiCounty">嘉義縣</option>
+            <option value="Chiayi">嘉義市</option>
+            <option value="PingtungCounty">屏東縣</option>
+            <option value="YilanCounty">宜蘭縣</option>
+            <option value="HualienCounty">花蓮縣</option>
+            <option value="TaitungCounty">臺東縣</option>
+            <option value="KinmenCounty">金門縣</option>
+            <option value="PenghuCounty">澎湖縣</option>
+            <option value="LienchiangCounty">連江縣</option>
+          </select>
+          <!-- <div class="dropdown">
+              <input type="text" class="form-select py-2 bg-icon-location" id="dropdownMenuButton1" placeholder="輸入想去的地區"
+              list="dataListOptions" maxlength="3">
+
+              <datalist id="dataListOptions" style="height: 50px;">
+              <option value="臺北市"></option>
+              <option value="新北市"></option>
+              <option value="桃園市"></option>
+              <option value="臺中市"></option>
+              <option value="臺南市"></option>
+              <option value="高雄市"></option>
+              <option value="基隆市"></option>
+              <option value="新竹市"></option>
+              <option value="新竹縣"></option>
+              <option value="苗栗縣"></option>
+              <option value="彰化縣"></option>
+              <option value="南投縣"></option>
+              <option value="雲林縣"></option>
+              <option value="嘉義縣"></option>
+              <option value="嘉義市"></option>
+              <option value="屏東縣"></option>
+              <option value="宜蘭縣"></option>
+              <option value="花蓮縣"></option>
+              <option value="臺東縣"></option>
+              <option value="金門縣"></option>
+              <option value="澎湖縣"></option>
+              <option value="連江縣"></option>
+            </datalist>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+            </div> -->
         </div>
         <div class="col-4">
-          <input type="text" class="form-control py-2" placeholder="輸入景點名稱">
+          <input type="text" class="form-control py-2" placeholder="輸入景點名稱" id="searchText" />
         </div>
         <div class="col d-none d-md-block">
-          <button class="btn btn-primary px-4 py-2">
+          <button type="button" class="btn btn-danger px-4 py-2" id="searchBtn">
             <img src="~img/icon-search.svg" alt="開始搜尋" />
             <span>搜尋</span>
           </button>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 
   <!-- 搜尋結果 -->
   <div class="content pt-5">
-    <div class="container">
+    <div class="container" id="searchResult">
       <!-- 排序方式 -->
-      <div class="row mb-3">
+      <div class="row align-items-center mb-3">
         <div class="col">
-          <h3 class="border-start border-primary border-3 ps-0">搜尋結果</h3>
+          <h5 class="border-start border-primary border-3 m-0 ps-1">
+            搜尋結果
+          </h5>
         </div>
         <div class="col text-end">
           <span class="me-2">排序</span>
@@ -97,7 +147,7 @@
       </div>
 
       <!-- 內容 -->
-      <div class="row mb-5 row-cols-md-4 g-2 gy-3" id="cardList">
+      <div class="row mb-5 g-2 gy-3 row-cols-md-4" id="cardList">
         <!-- <div class="col">
           <div class="card border-2 rounded-2 shadow">
             <img src="~img/card-image.jpg" alt="123" class="card-image">
@@ -115,18 +165,90 @@
         </div> -->
       </div>
 
-      <!-- 分頁 -->
-      <nav class="navigation pb-3">
-        <ul class="pagination justify-content-center">
-          <li class="page-item"><a class="page-link" href="#">＜</a></li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">＞</a></li>
-        </ul>
-      </nav>
+      <!-- <ul class="
+            pagination-container
+            d-flex
+            justify-content-center
+            list-unstyled
+            text-decoration-none
+            pb-5
+            mb-0
+          ">
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              me-2
+            ">
+          <a href="#"><img src="~img/icon-previous-page.svg" alt="回上一頁" /></a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+              active
+            ">
+          <a href="#">1</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+            ">
+          <a href="#">2</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+            ">
+          <a href="#">3</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+            ">
+          <a href="#">4</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+            ">
+          <a href="#">5</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              mx-2
+            ">
+          <a href="#">6</a>
+        </li>
+        <li class="
+              pagination-item
+              d-flex
+              align-items-center
+              justify-content-center
+              ms-2
+            ">
+          <a href="#"><img src="~img/icon-next-page.svg" alt="到下一頁" /></a>
+        </li>
+      </ul> -->
+
     </div>
   </div>
 

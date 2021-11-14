@@ -1,11 +1,29 @@
 import axios from "axios";
 import jsSHA from "jssha";
 
-const ITEM_PER_PAGE = 12;
-const URL_BASE = 'https://ptx.transportdata.tw/MOTC/v2/Tourism'
-const SELECT_STRING = '$select=ID%2C%20Name%2C%20DescriptionDetail%2C%20Description%2C%20Phone%2C%20Address%2C%20OpenTime%2C%20Picture%2C%20Class1%20%2CClass2%2CClass3%2C%20WebsiteUrl%2CCity'
-const FILTER_STRING = '$filter=Picture%2FPictureUrl1%20ne%20null%20and%20Class1%20ne%20null'
+const baseUrl = 'https://ptx.transportdata.tw/MOTC/v2/Tourism'
+const attractions = {
+    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class1', 'Class2', 'Class3', 'City'],
+    detailSelect: ['ID', 'Name', 'DescriptionDetail', 'Description', 'Phone', 'Address', 'OpenTime', 'Picture', 'Class1', 'Class2', 'Class3', 'WebsiteUrl', 'City'],
+    filter: 'Picture/PictureUrl1 ne null and Class1 ne null and (Address ne null or City ne null)'
+}
 
+const restaurant = {
+    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class', 'City'],
+    detailSelect: ['ID', 'Name', 'Description', 'Phone', 'Address', 'OpenTime', 'Picture', 'Class', 'WebsiteUrl', 'City']
+}
+
+const hotel = {
+    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class', 'City'],
+    detailSelect: ['ID', 'Name', 'Description', 'Phone', 'Address', 'Picture', 'Class', 'WebsiteUrl', 'City']
+}
+
+const activity = {
+    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class1', 'Class2', 'City'],
+    detailSelect: ['ID', 'Name', 'Description', 'Location', 'Phone', 'StartTime', 'EndTime', 'Address', 'Picture', 'Class1', 'Class2', 'WebsiteUrl', 'City']
+}
+
+/** Api 驗證 header */
 function getAuthorizationHeader() {
     let AppID = process?.env?.APPID ?? 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF';
     let AppKey = process?.env?.APPKEY ?? 'FFFFFFFF-FFFF-FFFF-FFFF-FFFFFFFFFFFF';
@@ -19,21 +37,73 @@ function getAuthorizationHeader() {
     return { 'Authorization': Authorization, 'X-Date': GMTString };
 }
 
+export function getAllAttractionsCount(searchCity, searchText) {
 
-export function getAttractionsCount() {
     return axios({
         headers: getAuthorizationHeader(),
         method: 'GET',
-        baseURL: `${URL_BASE}/ScenicSpot?${SELECT_STRING}&${FILTER_STRING}&$orderby=UpdateTime%20desc&$format=JSON`
+        baseURL: `${baseUrl}/ScenicSpot/${searchCity || ''}?$select=ID&$filter=${attractions.filter}` + (searchText ? ` and contains(Name,'${searchText}')` : '') + `&$orderby=UpdateTime desc&$format=JSON`
+    }).then((response) => response.data.length)
+}
+
+export function getOverviewAttractionsData(searchCity, searchText) {
+    console.log(`${baseUrl}/ScenicSpot/${searchCity || ''}?$select=${attractions.overviewSelect.join(',')}&$filter=${attractions.filter}` + (searchText ? ` and contains(Name,'${searchText}')` : '') + `&$orderby=UpdateTime desc&$format=JSON`)
+    return axios({
+        headers: getAuthorizationHeader(),
+        method: 'GET',
+        baseURL: `${baseUrl}/ScenicSpot/${searchCity || ''}?$select=${attractions.overviewSelect.join(',')}&$filter=${attractions.filter}` + (searchText ? ` and contains(Name,'${searchText}')` : '') + `&$orderby=UpdateTime desc&$format=JSON`
+    }).then((response) => {
+        return response.data.map(data => ({
+            id: data.ID,
+            title: data.Name,
+            address: data.Address,
+            city: data.City || data.Address.substr(0, 3),
+            imageUrl: data.Picture.PictureUrl1,
+            imageDescription: data.Picture.PictureDescription1,
+            tagList: [data.Class1, data.Class2, data.Class3].filter(Boolean)
+        }))
     })
-        .then((value) => value.data.length)
 }
 
-export function getAttractionsData(page,) {
-    const skipPage = isNaN(+page) ? 0 : ITEM_PER_PAGE * page
+export function getDetailAttractionsData(id) {
     return axios({
         headers: getAuthorizationHeader(),
         method: 'GET',
-        baseURL: `${URL_BASE}/ScenicSpot?${SELECT_STRING}&${FILTER_STRING}&$orderby=UpdateTime%20desc&$top=${ITEM_PER_PAGE}&$skip=${skipPage}&$format=JSON`
-    }).then((value) => value.data)
+        baseURL: `${baseUrl}/ScenicSpot?$select=${attractions.detailSelect.join(',')}&$filter=ID eq '${id}')&top=1&$format=JSON`
+    }).then((response) => {
+        return response.data.map(data => ({
+            id: data.ID,
+            title: data.Name,
+            description: data.Description,
+            phone: data.Phone,
+            address: data.Address,
+            openTime: data.OpenTime,
+            city: data.City || data.Address.substr(0, 3),
+            imageUrl: data.Picture.PictureUrl1,
+            imageDescription: data.Picture.PictureDescription1,
+            websiteUrl: data.WebsiteUrl,
+            tagList: [data.Class1, data.Class2, data.Class3].filter(Boolean)
+        }))
+    })
 }
+
+
+export function getAllRestaurantCount() { }
+
+export function getOverviewRestaurantData() { }
+
+export function getDetailRestaurantData() { }
+
+
+export function getAllHotelCount() { }
+
+export function getOverviewHotelData() { }
+
+export function getDetailHotelData() { }
+
+
+export function getAllActivityCount() { }
+
+export function getOverviewActivityData() { }
+
+export function getDetailActivityData() { }
