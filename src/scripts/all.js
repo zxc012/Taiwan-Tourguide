@@ -1,8 +1,8 @@
-import { getAllAttractionsCount, getOverviewAttractionsData } from "./dataService";
-import { createNewCard, createPaginationButtons, renderContent } from "./domService";
-import { paginationController } from "./paginationService";
+import { getAllScenicSpotCount, GetAuthorizationHeader, getOverviewAttractionsData } from "./dataService";
+import { createNewCard, renderContent } from "./domService";
+import { createPaginationButtons, createPaginationController, createPaginationStatusList } from "./paginationService";
 
-
+// 設定每頁最大顯示卡片數量
 const cardPerPage = 12;
 let length, dataList;
 
@@ -10,10 +10,7 @@ function render(element, innerHTML) {
     element.innerHTML += innerHTML;
 }
 
-/** 滑鼠滾輪觸發函式
- * 
- * 修改上方固定導覽列樣式
- */
+/** 頁面滾輪修改上方導覽列樣式 */
 function onWindowScroll() {
     const header = document.querySelector('#header')
     const logo = document.querySelector('#logo')
@@ -28,6 +25,7 @@ function onWindowScroll() {
     }
 }
 
+/** 搜尋種類變更時觸發事件 */
 function onSearchOptionsChange(event) {
     const banner = document.getElementById('banner')
     const title = document.getElementById('title')
@@ -39,20 +37,22 @@ function onSearchOptionsChange(event) {
     const bannerUrl = require(`../images/banner-${event.target.id}.png`)
     banner.setAttribute('style', `background-image: url(${bannerUrl})`);
 
-    history.pushState({ test: 123 }, '', `/${event.target.id}/`)
+    // history.pushState({}, '', `/${event.target.id}/`)
 }
 
-function onPaginationChange(event, pagination) {
-    console.log('event :>> ', event);
-    const cardList = document.querySelector('#cardList');
-    console.log('pagination[event.target.dataset.action] :>> ', pagination[event.target.dataset.action]);
-    console.log('event.target.dataset.value :>> ', event.target.dataset.value);
-    pagination[event.target.dataset.action](event.target.dataset.value)
 
-    // pagination.toPage(event.target.value)
-    // renderContent(cardList,)
-    history.pushState({ page: pagination.getCurrentPage() }, '', `?page=${pagination.getCurrentPage()}`)
-}
+
+// function onPaginationChange(event, pagination) {
+//     console.log('event :>> ', event);
+//     const cardList = document.querySelector('#cardList');
+//     console.log('pagination[event.target.dataset.action] :>> ', pagination[event.target.dataset.action]);
+//     console.log('event.target.dataset.value :>> ', event.target.dataset.value);
+//     pagination[event.target.dataset.action](event.target.dataset.value)
+
+//     // pagination.toPage(event.target.value)
+//     // renderContent(cardList,)
+//     history.pushState({ page: pagination.getCurrentPage() }, '', `?page=${pagination.getCurrentPage()}`)
+// }
 
 async function onSearchBtnClick() {
     const cardList = document.querySelector('#cardList');
@@ -61,7 +61,7 @@ async function onSearchBtnClick() {
     const searchTextElement = document.querySelector('#searchText');
     const searchText = searchTextElement.value;
 
-    length = await getAllAttractionsCount(searchCity, searchText)
+    length = await getAllScenicSpotCount(searchCity, searchText)
     dataList = await getOverviewAttractionsData(searchCity, searchText)
     console.log(length);
     console.log(dataList)
@@ -88,13 +88,6 @@ async function onSearchBtnClick() {
 
 
 export async function main() {
-    // const url = new URL(location.href);
-    // console.log(url)
-    window.onpopstate = (event) => {
-        // console.log('onpopstate :>> ', event);
-
-    }
-
     // banner圖片及文字處理
     document.querySelector('#searchOptions')
         .addEventListener('change', (event) => onSearchOptionsChange(event))
@@ -106,60 +99,58 @@ export async function main() {
     document.querySelector('#searchBtn')
         .addEventListener('click', async () => onSearchBtnClick())
 
-    window.addEventListener('popstate', (event) => {
-        // console.log('event', event);
-        // 根據url產生指定的element
-
-        // 重新渲染畫面
-    })
+    // 取得API Token
+    // const token = await GetAuthorizationHeader();
 
     // 取得資料
-    const cardList = document.querySelector('#cardList');
+    const dataList = await getOverviewAttractionsData();
+    const dataCount = dataList.length;
 
-    const dataCount = await getAllAttractionsCount()
-    const dataList = await getOverviewAttractionsData()
-    console.log(dataCount);
-    console.log(dataList);
+    // 計算總頁數
+    const totalPage = Math.ceil(dataCount / cardPerPage)
 
+    // 換頁時執行的功能
+    const onPageChange = (page) => {
+        // 建立換頁按鈕狀態
+        const paginationButtonStatus = createPaginationStatusList({ totalPage: totalPage, currentPage: page })
 
+        // 建立實際換頁按鈕
+        const paginationButtons = createPaginationButtons(paginationButtonStatus);
 
-    const totalPage = dataCount % cardPerPage === 0 ? dataCount / cardPerPage : Math.trunc(dataCount / cardPerPage) + 1
+        // 重新渲染換頁按鈕
+        const paginationContainer = document.querySelector('#pagination')
+        paginationContainer.innerHTML = paginationButtons.innerHTML;
 
-    const renderPage = (page) => {
+        // 重新渲染搜尋結果
         const currentStartCardIndex = (page - 1) * cardPerPage;
         const cardList = document.querySelector('#cardList');
 
         renderContent({ element: cardList, contentList: dataList.slice(currentStartCardIndex, currentStartCardIndex + cardPerPage), createRenderElement: createNewCard })
-
-        // for (let cardIndex = currentStartCardIndex; cardIndex < page * cardPerPage && cardIndex < dataCount; cardIndex++) {
-        //     render(cardList, createNewCard(dataList[cardIndex]))
-        // }
     }
 
+    // 換頁元件控制器
+    const paginationController = createPaginationController({ totalPage: totalPage, currentPage: 1, onPageChange: onPageChange })
 
-    const pagination = paginationController({ totalPage: totalPage, currentPage: 1, onChange: (page) => renderPage(page) })
-    // console.log('pagination :>> ', pagination);
-
-    const paginationButtons = createPaginationButtons(pagination.createPageButtonStatusList())
-    // console.log('paginationButtons :>> ', paginationButtons);
-
-    const searchResultElement = document.getElementById('searchResult');
-    searchResultElement.appendChild(paginationButtons);
-
-    const paginationContainer = document.getElementById('paginationContainer');
-
-    paginationContainer.addEventListener('click', () => onPaginationChange(event, pagination));
+    // 畫面初始化
+    paginationController.gotoFirstPage();
 
 
-    // 畫面渲染
-    for (let i = 1; i <= cardPerPage && i <= dataList.length; i++) {
-        // cardList.innerHTML += createNewCard(dataList[i])
+    // 新增換頁按鈕事件
+    const pagination = document.querySelector('#pagination')
+    pagination.addEventListener('click', (event) => {
+        // 僅在target為li元素時，才執行換頁功能
+        if (event.target.tagName.toLowerCase() === 'ul') return;
+        let target = event.target.tagName.toLowerCase() === 'li' ? event.target : event.target.closest('li');
+        if (target.dataset.disabled === 'true') return;
 
-        render(cardList, createNewCard(dataList[i]))
-    }
 
-    // const url = new URL(location.href)
-    // url.searchParams.get
+        if (target.dataset.action === 'gotoPage') {
+            paginationController[target.dataset.action](+target.dataset.value);
+        }
+        else {
+            paginationController[target.dataset.action]();
+        }
+    })
 }
 
 main();

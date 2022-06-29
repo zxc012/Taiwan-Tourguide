@@ -126,18 +126,61 @@ header .container {
 }
 
 // 換頁
-.pagination-item {
-  &:first-child a {
+// .pagination-item {
+//   &:first-child a {
+//     color: $color_grey_2;
+//     border: 1px solid $color_grey_3;
+//   }
+
+//   &:last-child a {
+//     color: $color_white;
+//     background-color: $color_red;
+//   }
+
+//   a {
+//     background-color: $color_white;
+//     color: $color_black;
+//     border-radius: 8px;
+//     border: 1px solid #00000000;
+//     display: inline-block;
+//     color: inherit;
+//     line-height: 44px;
+//     width: 44px;
+//     text-align: center;
+//     text-decoration: none;
+//     font-weight: bold;
+
+//     &[data-disabled="false"]:hover {
+//       background-color: $color_darkblue;
+//       color: $color_blue;
+//       border: 1px solid $color_blue;
+//     }
+
+//     // &[data-disabled="true"]:hover {
+//     //   pointer-events: none;
+//     //   cursor: none;
+//     // }
+
+//     &[data-active="true"] {
+//       background-color: $color_darkblue;
+//       color: $color_blue;
+//       border: 1px solid $color_blue;
+//     }
+//   }
+// }
+
+.pagination-container {
+  li:first-child  {
     color: $color_grey_2;
     border: 1px solid $color_grey_3;
   }
 
-  &:last-child a {
+  li:last-child  {
     color: $color_white;
     background-color: $color_red;
   }
 
-  a {
+  li {
     background-color: $color_white;
     color: $color_black;
     border-radius: 8px;
@@ -149,11 +192,17 @@ header .container {
     text-align: center;
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
+    user-select: none;
 
     &[data-disabled="false"]:hover {
       background-color: $color_darkblue;
       color: $color_blue;
       border: 1px solid $color_blue;
+    }
+
+    &[data-disabled="true"]:hover {
+      cursor: auto;
     }
 
     // &[data-disabled="true"]:hover {
