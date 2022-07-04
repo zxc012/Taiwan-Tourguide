@@ -1,35 +1,7 @@
 import axios from "axios";
 let accessToken;
 
-const baseUrl = 'https://tdx.transportdata.tw/api/basic/v2/Tourism'
-
-const ScenicSpot = {
-    simple: ['ScenicSpotID', 'ScenicSpotName', 'Address', 'Picture', 'Class1', 'Class2', 'Class3', 'City'],
-    detail: ['ScenicSpotID', 'ScenicSpotName', 'DescriptionDetail', 'Description', 'Phone', 'Address', 'OpenTime', 'Picture', 'Class1', 'Class2', 'Class3', 'WebsiteUrl', 'City'],
-    filter: 'Picture/PictureUrl1 ne null and Class1 ne null and (Address ne null or City ne null)'
-}
-const scenicSpotUrl = `${baseUrl}/ScenicSpot/`
-
-const simpleScenicSpotUrl = `https://tdx.transportdata.tw/api/basic/v2/Tourism/ScenicSpot/$select=ScenicSpotID,ScenicSpotName,Address,Picture,Class1,Class2,Class3,City&$filter=Picture/PictureUrl1 ne null and Class1 ne null and (Address ne null or City ne null)`;
-
-
-
-const restaurant = {
-    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class', 'City'],
-    detailSelect: ['ID', 'Name', 'Description', 'Phone', 'Address', 'OpenTime', 'Picture', 'Class', 'WebsiteUrl', 'City']
-}
-
-const hotel = {
-    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class', 'City'],
-    detailSelect: ['ID', 'Name', 'Description', 'Phone', 'Address', 'Picture', 'Class', 'WebsiteUrl', 'City']
-}
-
-const activity = {
-    overviewSelect: ['ID', 'Name', 'Address', 'Picture', 'Class1', 'Class2', 'City'],
-    detailSelect: ['ID', 'Name', 'Description', 'Location', 'Phone', 'StartTime', 'EndTime', 'Address', 'Picture', 'Class1', 'Class2', 'WebsiteUrl', 'City']
-}
-
-export function GetAuthorizationHeader() {
+export function getAuthorizationHeader() {
     const grant_type = "client_credentials";
     const client_id = "rt1593571-2fcc91f1-96cb-42d9";
     const client_secret = "e2246502-5b6c-4672-9101-4115a4260ef4"
@@ -46,45 +18,12 @@ export function GetAuthorizationHeader() {
         .then(data => accessToken = data)
 }
 
-// 取得所有觀光景點資料數量
-export function getAllScenicSpotCount(searchCity, searchText) {
-    console.log('accessToken :>> ', accessToken);
-    // return axios({
-    //     headers: getAuthorizationHeader(),
-    //     method: 'GET',
-    //     baseURL: `${baseUrl} / ScenicSpot / ${searchCity || ''}?$select = ID & $filter=${attractions.filter} ` + (searchText ? ` and contains(Name, '${searchText}')` : '') + ` & $orderby=UpdateTime desc & $format=JSON`
-    // }).then((response) => response.data.length)
-
-    return fetch('https://tdx.transportdata.tw/api/basic/v2/Tourism/ScenicSpot?$select=ScenicSpotID&$filter=Picture/PictureUrl1 ne null and Class1 ne null and (Address ne null or City ne null)', {
+// 取得所有觀光景點卡片資料
+export function getAllScenicSpotData(searchCity, searchText) {
+    return fetch(`https://tdx.transportdata.tw/api/basic/v2/Tourism/ScenicSpot${searchCity ? '/' + searchCity : ''}?$select=ScenicSpotID,ScenicSpotName,Address,Picture,Class1,Class2,Class3,City&$filter=Picture/PictureUrl1 ne null and (Address ne null or City ne null)${searchText ? ' and contains(ScenicSpotName,\'' + searchText + '\')' : ''}`, {
         headers: {
-            authorization: "Bearer " + accessToken.access_token,
+            "authorization": "Bearer " + accessToken.access_token,
         }
-    }).then((response) => response.json()).then(
-        data => data.length
-    )
-
-}
-
-export function getOverviewAttractionsData(searchCity, searchText) {
-    // console.log(`${baseUrl} /ScenicSpot/${searchCity || ''}?$select = ${attractions.overviewSelect.join(',')}& $filter=${attractions.filter} ` + (searchText ? ` and contains(Name, '${searchText}')` : '') + ` & $orderby=UpdateTime desc & $format=JSON`)
-    // return axios({
-    //     headers: getAuthorizationHeader(),
-    //     method: 'GET',
-    //     baseURL: `${baseUrl} /ScenicSpot/${searchCity || ''}?$select = ${attractions.overviewSelect.join(',')}& $filter=${attractions.filter} ` + (searchText ? ` and contains(Name, '${searchText}')` : '') + ` & $orderby=UpdateTime desc & $format=JSON`
-    // }).then((response) => {
-    //     return response.data.map(data => ({
-    //         id: data.ID,
-    //         title: data.Name,
-    //         address: data.Address,
-    //         city: data.City || data.Address.substr(0, 3),
-    //         imageUrl: data.Picture.PictureUrl1,
-    //         imageDescription: data.Picture.PictureDescription1,
-    //         tagList: [data.Class1, data.Class2, data.Class3].filter(Boolean)
-    //     }))
-    // })
-
-    return fetch('https://tdx.transportdata.tw/api/basic/v2/Tourism/ScenicSpot?$select=ScenicSpotID,ScenicSpotName,Address,Picture,Class1,Class2,Class3,City&$filter=Picture/PictureUrl1 ne null and Class1 ne null and (Address ne null or City ne null)', {
-        headers: accessToken
     })
         .then(response => response.json())
         .then((dataInfo) => {
@@ -100,7 +39,7 @@ export function getOverviewAttractionsData(searchCity, searchText) {
         })
 }
 
-export function getDetailAttractionsData(id) {
+export function getDetailScenicSpotData(id) {
     return axios({
         headers: getAuthorizationHeader(),
         method: 'GET',
@@ -122,23 +61,72 @@ export function getDetailAttractionsData(id) {
     })
 }
 
-
-export function getAllRestaurantCount() { }
-
-export function getOverviewRestaurantData() { }
+// 取得所有觀光餐飲卡片資料
+export function getAllRestaurantData(searchCity, searchText) {
+    return fetch(`https://tdx.transportdata.tw/api/basic/v2/Tourism/Restaurant${searchCity ? '/' + searchCity : ''}?$select=RestaurantID,RestaurantName,Address,Picture,Class,City&$filter=Picture/PictureUrl1 ne null and (Address ne null or City ne null)${searchText ? ' and contains(RestaurantName,\'' + searchText + '\')' : ''}`, {
+        headers: {
+            "authorization": "Bearer " + accessToken.access_token,
+        }
+    })
+        .then(response => response.json())
+        .then((dataInfo) => {
+            return dataInfo.map(data => ({
+                id: data.RestaurantID,
+                title: data.RestaurantName,
+                address: data.Address,
+                city: data.City || data.Address.substr(0, 3),
+                imageUrl: data.Picture.PictureUrl1,
+                imageDescription: data.Picture.PictureDescription1,
+                tagList: [data.Class]
+            }))
+        })
+}
 
 export function getDetailRestaurantData() { }
 
 
-export function getAllHotelCount() { }
-
-export function getOverviewHotelData() { }
+// 取得所有觀光旅宿卡片資料
+export function getAllHotelData(searchCity, searchText) {
+    return fetch(`https://tdx.transportdata.tw/api/basic/v2/Tourism/Hotel${searchCity ? '/' + searchCity : ''}?$select=HotelID,HotelName,Address,Picture,Class,City&$filter=Picture/PictureUrl1 ne null and (Address ne null or City ne null)${searchText ? ' and contains(HotelName,\'' + searchText + '\')' : ''}`, {
+        headers: {
+            "authorization": "Bearer " + accessToken.access_token,
+        }
+    })
+        .then(response => response.json())
+        .then((dataInfo) => {
+            return dataInfo.map(data => ({
+                id: data.HotelID,
+                title: data.HotelName,
+                address: data.Address,
+                city: data.City || data.Address.substr(0, 3),
+                imageUrl: data.Picture.PictureUrl1,
+                imageDescription: data.Picture.PictureDescription1,
+                tagList: [data.Class]
+            }))
+        })
+}
 
 export function getDetailHotelData() { }
 
-
-export function getAllActivityCount() { }
-
-export function getOverviewActivityData() { }
+// 取得所有觀光活動卡片資料
+export function getAllActivityData(searchCity, searchText) {
+    return fetch(`https://tdx.transportdata.tw/api/basic/v2/Tourism/Activity${searchCity ? '/' + searchCity : ''}?$select=ActivityID,ActivityName,Address,Picture,Class1,Class2,City&$filter=Picture/PictureUrl1 ne null and (Address ne null or City ne null)${searchText ? ' and contains(ActivityName,\'' + searchText + '\')' : ''}`, {
+        headers: {
+            "authorization": "Bearer " + accessToken.access_token,
+        }
+    })
+        .then(response => response.json())
+        .then((dataInfo) => {
+            return dataInfo.map(data => ({
+                id: data.ActivityID,
+                title: data.ActivityName,
+                address: data.Address,
+                city: data.City || data.Address.substr(0, 3),
+                imageUrl: data.Picture.PictureUrl1,
+                imageDescription: data.Picture.PictureDescription1,
+                tagList: [data.Class1, data.Class2].filter(Boolean)
+            }))
+        })
+}
 
 export function getDetailActivityData() { }

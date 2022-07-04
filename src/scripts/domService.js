@@ -8,9 +8,9 @@ export function renderContent({ element, createRenderElement, contentList }) {
 }
 
 export function createNewCard({ tagList, imageUrl, imageDescription, title, city }) {
-  const tagHtml = tagList
+  const tagHtml = tagList[0] !== undefined ? tagList
     .map((tag) => `<span class="badge bg-secondary me-1">${tag}</span>`)
-    .join("");
+    .join("") : '';
 
   imageDescription = imageDescription ?? title
 
